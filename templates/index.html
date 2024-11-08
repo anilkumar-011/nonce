@@ -2,10 +2,12 @@
 <html lang="en">
 
 <head>
-    <Script src="https://www.googletagmanager.com/gtag/js" strategy="afterInteractive" nonce="{{nonce}}"></Script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+
+    <script src="https://www.googletagmanager.com/gtag/js" nonce="{{nonce}}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" nonce="{{css_nonce}}">
 </head>
 
 <body>

@@ -9,7 +9,9 @@ app = Flask(__name__)
 def home():
     nonce = base64.b64encode(secrets.token_bytes(16)).decode('utf-8')
     g.nonce=nonce
-    return render_template("index.html", nonce=nonce)
+    css_nonce = base64.b64encode(secrets.token_bytes(16)).decode('utf-8')
+    g.css_nonce=css_nonce
+    return render_template("index.html", nonce=nonce, css_nonce=css_nonce)
 
 
 @app.after_request
@@ -20,7 +22,9 @@ def after_request(response):
     nonce = getattr(g, 'nonce', None)
     if nonce:
         response.headers["Content-Security-Policy"] = f"script-src 'nonce-{nonce}'"
-
+    css_nonce = getattr(g, 'css_nonce', None)
+    if css_nonce:
+        response.headers["Content-Security-Policy"] = f"style-src 'nonce-{css_nonce}'"
     return response
 
 
