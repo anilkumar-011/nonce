@@ -7,11 +7,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    nonce = base64.b64encode(secrets.token_bytes(16)).decode('utf-8')
-    g.nonce=nonce
-    css_nonce = base64.b64encode(secrets.token_bytes(16)).decode('utf-8')
-    g.css_nonce=css_nonce
-    return render_template("index.html", nonce=nonce, css_nonce=css_nonce)
+    # nonce = base64.b64encode(secrets.token_bytes(16)).decode('utf-8')
+    # g.nonce=nonce
+    # css_nonce = base64.b64encode(secrets.token_bytes(16)).decode('utf-8')
+    # g.css_nonce=css_nonce
+    return render_template("index.html")
 
 
 @app.after_request
