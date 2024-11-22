@@ -23,10 +23,10 @@ def after_request(response):
     nonce = getattr(g, "nonce", None)
     css_nonce = getattr(g, "css_nonce", None)
     response.headers["Content-Security-Policy"] = ""
-    # if nonce:
-    #     response.headers["Content-Security-Policy"] += f" script-src 'nonce-{nonce}'"
-    # if css_nonce:
-    #     response.headers["Content-Security-Policy"] += f" style-src 'nonce-{css_nonce}'"
+    if nonce:
+        response.headers["Content-Security-Policy"] += f" script-src 'nonce-{nonce}'"
+    if css_nonce:
+        response.headers["Content-Security-Policy"] += f" style-src 'nonce-{css_nonce}'"
     return response
 
 
