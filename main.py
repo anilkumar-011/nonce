@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, g
+from flask import Flask, jsonify, render_template
 import os
 import base64
 import secrets
@@ -8,10 +8,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    nonce = base64.b64encode(secrets.token_bytes(16)).decode("utf-8")
-    g.nonce = nonce
-    css_nonce = base64.b64encode(secrets.token_bytes(16)).decode("utf-8")
-    g.css_nonce = css_nonce
     return render_template("index.html")
 
 
@@ -20,8 +16,8 @@ def after_request(response):
     response.headers["access-control-allow-methods"] = "DELETE, GET, POST, PUT"
     response.headers["access-control-allow-origin"] = "*"
     response.headers["access-control-allow-headers"] = "content-type"
-    nonce = getattr(g, "nonce", None)
-    css_nonce = getattr(g, "css_nonce", None)
+    nonce = base64.b64encode(secrets.token_bytes(16)).decode("utf-8")
+    css_nonce = base64.b64encode(secrets.token_bytes(16)).decode("utf-8")
     response.headers["Content-Security-Policy"] = ""
     if nonce:
         response.headers["Content-Security-Policy"] += f" script-src 'nonce-{nonce}'"
